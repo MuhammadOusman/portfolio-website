@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Ousman Sohail - Personal Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Config for Dark Theme & Accent Color -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#1a1a1a', /* Sidebar & Footer */
+                        'bg-dark': '#131313',    /* Main Content Background */
+                        'card-dark': '#212121',  /* Card backgrounds */
+                        'accent-blue': '#00bcd4', /* Main accent color (Cyan/Teal) */
+                        'text-light': '#e0e0e0', /* General light text */
+                        'text-muted': '#b0b0b0', /* Muted text */
+                        'border-dark': '#333333', /* Darker borders */
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/profile/my-picture.jpg" type="image/x-icon">
+    <style>
+        /* General Body and Container Styles */
+        body {
+            background-color: #131313; /* bg-dark */
+            color: #e0e0e0; /* text-light */
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Base Link Styles */
+        a {
+            color: #00bcd4; /* accent-blue */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #00e5ff; /* Slightly lighter accent */
+            text-decoration: underline;
+        }
+
+        /* Overriding default Tailwind/template colors for dark theme directly */
+        .bg-gray-50, .bg-white { background-color: #131313 !important; } /* Ensure bg-dark */
+        .text-gray-800, .text-gray-600 { color: #e0e0e0 !important; } /* Ensure text-light */
+        .bg-gray-900 { background-color: #1a1a1a !important; } /* Ensure primary-dark */
+        .text-gray-400 { color: #b0b0b0 !important; } /* Ensure text-muted */
+        .hover\:bg-gray-800:hover { background-color: #333333 !important; } /* Custom hover for nav */
+        .text-blue-500 { color: #00bcd4 !important; } /* Ensure accent-blue */
+        .hover\:text-blue-400:hover { color: #00bcd4 !important; } /* Ensure accent-blue hover */
+        .hover\:bg-blue-600:hover { background-color: #008c9e !important; } /* Darker hover for accent */
+        .border-blue-500 { border-color: #00bcd4 !important; } /* Match accent */
+        .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; }
+        .shadow-md { box-shadow: 0 4px 6px rgba(0,0,0,0.2) !important; }
+        .shadow-lg { box-shadow: 0 10px 15px rgba(0,0,0,0.3) !important; }
+
+        /* Custom CSS for animations and effects */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #00bcd4;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .active::after {
+            width: 100%;
+        }
+        .hero-img {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .skill-item {
+            transition: transform 0.3s ease;
+        }
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+        .portfolio-item {
+            overflow: hidden;
+            position: relative;
+        }
+        .portfolio-img {
+            transition: transform 0.5s ease;
+        }
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.1);
+        }
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 188, 212, 0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        .resume-item-container {
+            position: relative;
+            padding-left: 20px;
+        }
+        .resume-item-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 2px;
+            background: #444;
+        }
+        .resume-item {
+            padding-bottom: 20px;
+            position: relative;
+        }
+        .resume-item::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00bcd4;
+            left: -25px;
+            top: 5px;
+            border: 2px solid #131313;
+        }
+        .sub-projects-list li {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: #b0b0b0;
+        }
+        .cert-item-details ul {
+            list-style-type: disc;
+            margin-left: 1.25rem;
+            color: #b0b0b0;
+            font-size: 0.875rem;
+        }
+        .cert-thumbnail {
+            object-fit: contain;
+            border: 1px solid #444;
+        }
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 256px;
+            transition: all ease-in-out 0.3s;
+            background-color: #1a1a1a;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 997;
+            padding: 0 20px;
+            overflow-y: auto;
+        }
+        #main {
+            margin-left: 256px;
+            transition: all ease-in-out 0.3s;
+            background-color: #131313;
+            min-height: 100vh;
+        }
+        #footer {
+            margin-left: 256px;
+            transition: all ease-in-out 0.3s;
+        }
+        @media (max-width: 767px) {
+            #header {
+                width: 100%;
+                height: auto;
+                position: relative;
+                transform: translateX(0) !important;
+                box-shadow: none;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            #main {
+                margin-left: 0;
+                padding-top: 20px;
+            }
+            #footer {
+                margin-left: 0;
+            }
+            .mobile-nav-toggle {
+                display: none;
+            }
+            .nav-link span {
+                display: inline;
+            }
+            .portfolio-grid-container, .certs-grid-container, .contact-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .resume-item-container {
+                padding-left: 0;
+            }
+            .resume-item-container::before, .resume-item::after {
+                display: none;
+            }
+            .cert-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .cert-item .cert-details {
+                text-align: center;
+            }
+            .cert-item .cert-details ul {
+                text-align: left;
+            }
+        }
+        
+        .portfolio-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .certs-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        /* Hero Section Specific Styles */
+        .hero-section {
+            background-color: #131313; /* Use bg-dark */
+            background-image: url('assets/hero/hero-bg.jpg'); /* Local Hero background image */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            color: #e0e0e0;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            z-index: -1;
+        }
+        .hero-section h1 {
+            font-size: 3.5rem; /* Equivalent to 56px */
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        .hero-section p {
+            font-size: 1.5rem; /* Equivalent to 24px */
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .hero-section .typed {
+            color: #00bcd4; /* Accent color */
+            font-weight: 600;
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .hero-buttons a {
+            padding: 0.75rem 2rem;
+            border-radius: 9999px; /* rounded-full */
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .hero-buttons .btn-primary {
+            background-color: #00bcd4; /* accent-blue */
+            color: white;
+        }
+        .hero-buttons .btn-primary:hover {
+            background-color: #008c9e; /* Darker accent */
+        }
+        .hero-buttons .btn-outline {
+            border: 2px solid #00bcd4; /* accent-blue */
+            color: #00bcd4;
+        }
+        .hero-buttons .btn-outline:hover {
+            background-color: #00bcd4;
+            color: white;
+        }
+        /* Style for messages */
+        .form-message {
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .form-message.success {
+            background-color: #28a745; /* Green */
+            color: white;
+        }
+        .form-message.error {
+            background-color: #dc3545; /* Red */
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Mobile Menu Button (Not functional as sidebar is always open on mobile for simplicity) -->
+    <button id="mobile-menu-button" class="md:hidden fixed top-5 right-5 z-50 bg-accent-blue text-white p-2 rounded-full shadow-lg">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+
+    <!-- Header/Navigation -->
+    <header id="header" class="fixed left-0 top-0 h-full w-64 bg-primary-dark text-white shadow-lg transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
+        <div class="flex flex-col h-full p-5">
+            <div class="text-center py-8">
+                <!-- Your Picture Placeholder -->
+                <img src="assets/profile/my-picture.jpg" alt="Muhammad Ousman Sohail Profile" class="hero-img rounded-full w-32 h-32 md:w-40 md:h-40 object-cover mx-auto shadow-xl border-4 border-accent-blue mb-4">
+                <h1 class="text-2xl font-bold text-text-light mb-2">Muhammad Ousman Sohail</h1>
+                <p class="text-sm text-text-muted">Karachi 75850 | ousmansohail786@gmail.com | +923142171538</p>
+                <div class="flex justify-center space-x-3 mt-3">
+                    <a href="https://www.linkedin.com/in/muhammadousman/" target="_blank" class="text-text-muted hover:text-accent-blue text-xl"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/MuhammadOusman" target="_blank" class="text-text-muted hover:text-accent-blue text-xl"><i class="fab fa-github"></i></a>
+                    <a href="https://ousman.me" target="_blank" class="text-text-muted hover:text-accent-blue text-xl"><i class="fas fa-globe"></i></a>
+                </div>
+            </div>
+            
+            <nav class="flex-1">
+                <ul class="space-y-3">
+                    <li><a href="#hero-section" class="nav-link active flex items-center py-2 px-4 rounded hover:bg-gray-800 text-text-light"><i class="fas fa-home mr-3 text-text-muted"></i> <span>Home</span></a></li>
+                    <li><a href="#about" class="nav-link flex items-center py-2 px-4 rounded hover:bg-gray-800 text-text-light"><i class="fas fa-user mr-3 text-text-muted"></i> <span>About</span></a></li>
+                    <li><a href="#resume" class="nav-link flex items-center py-2 px-4 rounded hover:bg-gray-800 text-text-light"><i class="fas fa-file-alt mr-3 text-text-muted"></i> <span>Resume</span></a></li>
+                    <li><a href="#skills" class="nav-link flex items-center py-2 px-4 rounded hover:bg-gray-800 text-text-light"><i class="fas fa-cogs mr-3 text-text-muted"></i> <span>Skills</span></a></li>
+                    <li><a href="#portfolio" class="nav-link flex items-center py-2 px-4 rounded hover:bg-gray-800 text-text-light"><i class="fas fa-briefcase mr-3 text-text-muted"></i> <span>Portfolio</span></a></li>
+                    <li><a href="#certifications" class="nav-link flex items-center py-2 px-4 rounded hover:bg-gray-800 text-text-light"><i class="fas fa-certificate mr-3 text-text-muted"></i> <span>Certifications</span></a></li>
+                    <li><a href="#contact" class="nav-link flex items-center py-2 px-4 rounded hover:bg-gray-800 text-text-light"><i class="fas fa-envelope mr-3 text-text-muted"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+            
+            <div class="text-sm text-gray-500 py-4 text-text-muted">
+                © Copyright <strong>Muhammad Ousman Sohail</strong><br>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 min-h-screen">
+        <!-- Hero Section -->
+        <section id="hero-section" class="hero-section">
+            <div class="container mx-auto">
+                <h1>Muhammad Ousman Sohail</h1>
+                <p>I'm a <span class="typed"></span></p>
+                <div class="hero-buttons">
+                    <a href="assets/downloads/your_cv.pdf" target="_blank" class="btn-primary">Download CV</a>
+                    <a href="#contact" class="btn-outline">Hire Me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 px-5 bg-bg-dark">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-3 text-text-light">About</h2>
+                    <div class="w-20 h-1 bg-accent-blue mx-auto"></div>
+                    <p class="mt-6 max-w-2xl mx-auto text-text-muted">Enthusiastic and results-driven Computer Science undergraduate seeking a challenging Summer Internship in Software Development, with a strong focus on Flutter development. Eager to apply foundational programming skills, object-oriented concepts, and problem-solving abilities to contribute to innovative projects and gain practical industry experience.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume" class="py-20 px-5 bg-card-dark">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-3 text-text-light">Resume</h2>
+                    <div class="w-20 h-1 bg-accent-blue mx-auto"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-text-light">Work Experience</h3>
+                        <div class="bg-card-dark p-6 rounded-lg shadow-sm mb-8 resume-item-container">
+                            <div class="resume-item">
+                                <h4 class="text-xl font-semibold mb-2 text-text-light">Customer Sales Representative</h4>
+                                <div class="text-accent-blue mb-2">July 2023 – September 2023</div>
+                                <p class="text-text-muted mb-3"><em>ARC Designer - Karachi</em></p>
+                                <ul class="list-disc pl-5 mt-3 text-text-muted space-y-2">
+                                    <li>Developed keen insight into customer requirements and market trends, translating user needs into creative solutions.</li>
+                                    <li>Honed interpersonal and problem-solving skills through direct customer interaction and relationship building, crucial for collaborative development environments.</li>
+                                    <li>Utilized logical thinking to understand and address customer design preferences, fostering a solutions-oriented approach.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-text-light">Education</h3>
+                        <div class="bg-card-dark p-6 rounded-lg shadow-sm mb-6 resume-item-container">
+                            <div class="resume-item">
+                                <h4 class="text-xl font-semibold mb-1 text-text-light">Undergrad in Computer Science</h4>
+                                <div class="text-accent-blue mb-2">August 2023 – Present</div>
+                                <p class="text-text-muted"><em>DHA SUFFA UNIVERSITY - Karachi</em></p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-card-dark p-6 rounded-lg shadow-sm mb-6 resume-item-container">
+                            <div class="resume-item">
+                                <h4 class="text-xl font-semibold mb-1 text-text-light">DAE (eve) in CIT</h4>
+                                <div class="text-accent-blue mb-2">October 2021 – July 2024</div>
+                                <p class="text-text-muted"><em>GMI FB AREA - Karachi</em></p>
+                                <ul class="list-disc pl-5 mt-2 text-text-muted">
+                                    <li>Gained foundational knowledge in programming principles, Object-Oriented Programming (OOP), and basic computer architecture.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-card-dark p-6 rounded-lg shadow-sm resume-item-container">
+                            <div class="resume-item">
+                                <h4 class="text-xl font-semibold mb-1 text-text-light">INTERMEDIATE in Pre-Engineering</h4>
+                                <div class="text-accent-blue mb-2">September 2021 – July 2023</div>
+                                <p class="text-text-muted"><em>PECHS Govt Degree College - Karachi</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 px-5 bg-bg-dark">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-3 text-text-light">Skills</h2>
+                    <div class="w-20 h-1 bg-accent-blue mx-auto"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-text-muted">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-text-light">Technical Skills:</h3>
+                        <p class="mb-2"><strong>Programming Languages:</strong> Dart, Python (NumPy, SymPy, Matplotlib), JavaScript (ES6,7,8), C#, C, HTML, CSS</p>
+                        <p class="mb-2"><strong>Frameworks/Libraries:</strong> Flutter, React.js (Learning), React Native (Basic Understanding), .NET (Windows Forms), Node.js (Familiar/Learning)</p>
+                        <p class="mb-2"><strong>Databases:</strong> MySQL, SQL Server (Express), PostgreSQL, Hive (Local DB), Firebase (Firestore, Auth)</p>
+                        <p class="mb-2"><strong>Tools & Platforms:</strong> Git, GitHub, VS Code, XAMPP, Postman/API Testing Tools, Expo CLI, Visual Studio</p>
+                        <p class="mb-2"><strong>Concepts:</strong> Object-Oriented Programming (OOP), Data Structures & Algorithms (DSA), Database Management Systems (DBMS), Programming Fundamentals, Computer Organization and Assembly Language (COAL), Introduction to Information & Communication Technologies (IICT), API Development & Integration</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-text-light">Soft Skills:</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Communication Skills</li>
+                            <li>Problem-Solving</li>
+                            <li>Teamwork</li>
+                            <li>Logical Thinking</li>
+                            <li>Customer Needs Analysis</li>
+                        </ul>
+                        <h3 class="text-xl font-bold mt-6 mb-4 text-text-light">Languages:</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li><strong>ENGLISH</strong> - Fluent</li>
+                            <li><strong>URDU</strong> - Native</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-20 px-5 bg-card-dark">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-3 text-text-light">Portfolio (Projects)</h2>
+                    <div class="w-20 h-1 bg-accent-blue mx-auto"></div>
+                </div>
+                
+                <div class="flex justify-center mb-10">
+                    <div class="inline-flex rounded-md shadow-sm">
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium rounded-l-lg bg-accent-blue text-white" data-filter="all">All</button>
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium bg-card-dark text-text-muted hover:bg-gray-800" data-filter="flutter">Flutter</button>
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium bg-card-dark text-text-muted hover:bg-gray-800" data-filter="react-native">React Native</button>
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium bg-card-dark text-text-muted hover:bg-gray-800" data-filter="web">Web (React/MERN)</button>
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium rounded-r-lg bg-card-dark text-text-muted hover:bg-gray-800" data-filter="desktop">Desktop (C#)</button>
+                    </div>
+                </div>
+                
+                <div class="portfolio-grid-container">
+                    <!-- Project 1: FlutterCourse -->
+                    <div class="portfolio-item rounded-lg overflow-hidden shadow-lg bg-card-dark" data-category="flutter">
+                        <div class="relative">
+                            <img src="assets/projects/flutter-portfolio.jpg" class="portfolio-img w-full h-48 object-cover" alt="FlutterCourse Portfolio Thumbnail">
+                            <div class="portfolio-overlay">
+                                <h4 class="text-white font-bold text-xl">FlutterCourse — App Portfolio</h4>
+                                <p class="text-white">Comprehensive collection of Flutter apps.</p>
+                                <div class="flex mt-3">
+                                    <a href="https://github.com/MuhammadOusman/FlutterCourse" target="_blank" class="text-white mx-1 text-2xl hover:text-accent-blue" title="View Repository"><i class="fas fa-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details p-4 text-text-muted">
+                            <p><strong>Type:</strong> Flutter Mobile Application Portfolio Repository</p>
+                            <p>Showcases versatility in Flutter development, covering diverse app categories and fundamental concepts.</p>
+                            <h5 class="font-semibold text-text-light mt-3 mb-2">Included Projects:</h5>
+                            <ul class="sub-projects-list">
+                                <li><strong>LoginForm:</strong> Full-Stack Mobile Auth with PHP+MySQL.</li>
+                                <li><strong>Hadith App:</strong> Minimalist Islamic Hadith display.</li>
+                                <li><strong>Quran App:</strong> Beginner-friendly Surah list UI.</li>
+                                <li><strong>Todo App:</strong> Task Manager with local state & Hive.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2: React Native Practice -->
+                    <div class="portfolio-item rounded-lg overflow-hidden shadow-lg bg-card-dark" data-category="react-native">
+                        <div class="relative">
+                            <img src="assets/projects/react-native-practice.jpg" class="portfolio-img w-full h-48 object-cover" alt="React Native Practice Thumbnail">
+                            <div class="portfolio-overlay">
+                                <h4 class="text-white font-bold text-xl">React Native Practice</h4>
+                                <p class="text-white">Collection of React Native app experiments.</p>
+                                <div class="flex mt-3">
+                                    <a href="https://github.com/MuhammadOusman/react-native-practice.git" target="_blank" class="text-white mx-1 text-2xl hover:text-accent-blue" title="View Repository"><i class="fas fa-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details p-4 text-text-muted">
+                            <p><strong>Type:</strong> React Native Mobile UI/UX Development Practice</p>
+                            <p>Focused on mastering mobile UI/UX, core concepts, and real-world implementation.</p>
+                            <p><strong>Technologies:</strong> React Native (Expo), JavaScript, React Navigation.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3: JP_awb — MERN Stack Projects -->
+                    <div class="portfolio-item rounded-lg overflow-hidden shadow-lg bg-card-dark" data-category="web">
+                        <div class="relative">
+                            <img src="assets/projects/mern-stack-projects.jpg" class="portfolio-img w-full h-48 object-cover" alt="MERN Stack Projects Thumbnail">
+                            <div class="portfolio-overlay">
+                                <h4 class="text-white font-bold text-xl">JP_awb — MERN Stack Projects (React Phase)</h4>
+                                <p class="text-white">React.js projects from Jawan Pakistan MERN learning.</p>
+                                <div class="flex mt-3">
+                                    <a href="https://github.com/MuhammadOusman/JP_awb.git" target="_blank" class="text-white mx-1 text-2xl hover:text-accent-blue" title="View Repository"><i class="fas fa-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details p-4 text-text-muted">
+                            <p><strong>Type:</strong> MERN Stack Web Development Portfolio (Frontend Focus)</p>
+                            <p>Showcases React.js projects (Weather App, News App) with public API integration. <strong>Planned:</strong> Node.js, Express, MongoDB.</p>
+                            <p><strong>Technologies:</strong> React.js, JavaScript, HTML, CSS, Public APIs.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 4: MobileStoreApp -->
+                    <div class="portfolio-item rounded-lg overflow-hidden shadow-lg bg-card-dark" data-category="desktop">
+                        <div class="relative">
+                            <img src="assets/projects/mobile-store-app.jpg" class="portfolio-img w-full h-48 object-cover" alt="Mobile Store App Thumbnail">
+                            <div class="portfolio-overlay">
+                                <h4 class="text-white font-bold text-xl">MobileStoreApp — C# Windows Forms App</h4>
+                                <p class="text-white">Desktop Mobile Store Management System.</p>
+                                <div class="flex mt-3">
+                                    <a href="https://github.com/MuhammadOusman/MobileStoreApp.git" target="_blank" class="text-white mx-1 text-2xl hover:text-accent-blue" title="View Repository"><i class="fas fa-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details p-4 text-text-muted">
+                            <p><strong>Type:</strong> Desktop Application (Mobile Store Management System)</p>
+                            <p>Simulates mobile store operations. Covers UI design, inventory handling, customer management, and SQL Server Express database integration.</p>
+                            <p><strong>Technologies:</strong> C#, Windows Forms (.NET), SQL Server (Express).</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 5: Dart NAVTTC Projects -->
+                    <div class="portfolio-item rounded-lg overflow-hidden shadow-lg bg-card-dark" data-category="flutter">
+                        <div class="relative">
+                            <img src="assets/projects/dart-projects.jpg" class="portfolio-img w-full h-48 object-cover" alt="Dart Projects Thumbnail">
+                            <div class="portfolio-overlay">
+                                <h4 class="text-white font-bold text-xl">Dart NAVTTC Projects</h4>
+                                <p class="text-white">Collection of Dart learning exercises & mini apps.</p>
+                                <div class="flex mt-3">
+                                    <a href="https://github.com/MuhammadOusman/Dart_NAVTTC" target="_blank" class="text-white mx-1 text-2xl hover:text-accent-blue" title="View Repository"><i class="fas fa-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details p-4 text-text-muted">
+                            <p><strong>Type:</strong> Dart Programming Language Learning & Practice Repository</p>
+                            <p>Documents the journey of mastering Dart fundamentals, OOP, and CLI applications.</p>
+                            <p><strong>Technologies:</strong> Dart, Git, GitHub.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section (Replaced Services) -->
+        <section id="certifications" class="py-20 px-5 bg-bg-dark">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-3 text-text-light">Certifications and Licenses</h2>
+                    <div class="w-20 h-1 bg-accent-blue mx-auto"></div>
+                </div>
+                
+                <div class="certs-grid-container">
+                    <!-- Certification 1 -->
+                    <div class="cert-item bg-card-dark p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                        <img src="assets/certs/figma-cert.jpg" alt="Figma Design Certificate" class="cert-thumbnail w-24 h-20 object-contain rounded">
+                        <div class="cert-details flex-1">
+                            <h4 class="text-xl font-semibold mb-1 text-text-light">Mobile App Design in Figma: From Concept to Prototype</h4>
+                            <p class="text-text-muted text-sm">Udemy | Completed: June 24, 2025</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Certification 2 -->
+                    <div class="cert-item bg-card-dark p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                        <img src="assets/certs/js-cert.jpg" alt="JavaScript Certificate" class="cert-thumbnail w-24 h-20 object-contain rounded">
+                        <div class="cert-details flex-1">
+                            <h4 class="text-xl font-semibold mb-1 text-text-light">JavaScript - Complete Guide (Beginner + Advanced)</h4>
+                            <p class="text-text-muted text-sm">Udemy | Completed: June 24, 2025</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Certification 3 -->
+                    <div class="cert-item bg-card-dark p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                        <img src="assets/certs/rn-cert.jpg" alt="React Native Certificate" class="cert-thumbnail w-24 h-20 object-contain rounded">
+                        <div class="cert-details flex-1">
+                            <h4 class="text-xl font-semibold mb-1 text-text-light">React Native Unveiled: From Basics to Mobile Mastery</h4>
+                            <p class="text-text-muted text-sm">Udemy | Completed: October 6, 2024</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Certification 4 -->
+                    <div class="cert-item bg-card-dark p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                        <img src="assets/certs/ielts-cert.jpg" alt="IELTS Certificate" class="cert-thumbnail w-24 h-20 object-contain rounded">
+                        <div class="cert-details flex-1">
+                            <h4 class="text-xl font-semibold mb-1 text-text-light">IELTS Band 8: IELTS Listening Mastery | IELTS Tenses</h4>
+                            <p class="text-text-muted text-sm">Udemy | Completed: September 15, 2024</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Certification 5 -->
+                    <div class="cert-item bg-card-dark p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                        <img src="assets/certs/navttc-flutter-cert.jpg" alt="NAVTTC Flutter Certificate" class="cert-thumbnail w-24 h-20 object-contain rounded">
+                        <div class="cert-details flex-1">
+                            <h4 class="text-xl font-semibold mb-1 text-text-light">Mobile App Development (Flutter)</h4>
+                            <p class="text-text-muted text-sm">NAVTTC | Completed: March 2025 - June 15, 2025</p>
+                            <ul class="list-disc pl-5 text-text-muted text-xs mt-1">
+                                <li>Acquired hands-on experience in Flutter, Dart, Firebase integration, and API development & testing.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Certification 6 -->
+                    <div class="cert-item bg-card-dark p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                        <img src="assets/certs/jawan-pakistan-cert.jpg" alt="Jawan Pakistan MERN Certificate" class="cert-thumbnail w-24 h-20 object-contain rounded">
+                        <div class="cert-details flex-1">
+                            <h4 class="text-xl font-semibold mb-1 text-text-light">Advanced Web & Mobile Development (MERN Stack)</h4>
+                            <p class="text-text-muted text-sm">Jawan Pakistan Program | Ongoing: May 25, 2025 - October 2025 (Expected)</p>
+                            <ul class="list-disc pl-5 text-text-muted text-xs mt-1">
+                                <li>Currently learning Vanilla JS ES6, API integration, and React.js for modern web and mobile application development.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 px-5 bg-card-dark">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-3 text-text-light">Contact</h2>
+                    <div class="w-20 h-1 bg-accent-blue mx-auto"></div>
+                </div>
+                
+                <div class="contact-info-grid">
+                    <div class="bg-primary-dark p-6 rounded-lg shadow-sm col-span-1 lg:col-span-1">
+                        <div class="flex items-start text-text-muted mb-4">
+                            <div class="text-accent-blue text-2xl mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-1 text-text-light">Location:</h4>
+                                <p>Karachi 75850</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start text-text-muted mb-4">
+                            <div class="text-accent-blue text-2xl mr-4 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-1 text-text-light">Email:</h4>
+                                <p>ousmansohail786@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start text-text-muted mb-4">
+                            <div class="text-accent-blue text-2xl mr-4 mt-1">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-1 text-text-light">Call:</h4>
+                                <p>+923142171538</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 text-text-muted">
+                            <h4 class="text-lg font-semibold mb-2 text-text-light">Online Presence:</h4>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="https://www.linkedin.com/in/muhammadousman/" target="_blank" class="text-accent-blue hover:underline flex items-center"><i class="fab fa-linkedin-in mr-2"></i> LinkedIn</a>
+                                <a href="https://github.com/MuhammadOusman" target="_blank" class="text-accent-blue hover:underline flex items-center"><i class="fab fa-github mr-2"></i> GitHub</a>
+                                <a href="https://ousman.me" target="_blank" class="text-accent-blue hover:underline flex items-center"><i class="fas fa-globe mr-2"></i> Personal Website</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-span-1 lg:col-span-2">
+                        <form id="contact-form" action="https://formspree.io/f/mvgrvonz" method="POST" class="space-y-6 bg-primary-dark p-6 rounded-lg shadow-lg">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="name" class="block mb-2 font-medium text-text-light">Your Name</label>
+                                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-border-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent bg-card-dark text-text-light" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block mb-2 font-medium text-text-light">Your Email</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-border-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent bg-card-dark text-text-light" required>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block mb-2 font-medium text-text-light">Subject</label>
+                                <input type="text" id="subject" name="_subject" class="w-full px-4 py-2 border border-border-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent bg-card-dark text-text-light">
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block mb-2 font-medium text-text-light">Message</label>
+                                <textarea id="message" name="message" rows="6" class="w-full px-4 py-2 border border-border-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent bg-card-dark text-text-light" required></textarea>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="bg-accent-blue hover:bg-blue-600 text-white px-8 py-3 rounded-full shadow-md transition duration-300">Send Message</button>
+                            </div>
+                            <!-- Form submission messages -->
+                            <div id="form-messages" class="form-message hidden"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <a href="#" id="back-to-top" class="fixed bottom-8 right-8 bg-accent-blue text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === targetId) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // Update active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+            
+            // Show/hide back to top button
+            const backToTopButton = document.getElementById('back-to-top');
+            if (backToTopButton) {
+                if (scrollPosition > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'invisible');
+                    backToTopButton.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'visible');
+                    backToTopButton.classList.add('opacity-0', 'invisible');
+                }
+            }
+        });
+        
+        // Portfolio filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-accent-blue', 'text-white');
+                    btn.classList.add('bg-card-dark', 'text-text-muted', 'hover:bg-gray-800');
+                });
+                
+                button.classList.remove('bg-card-dark', 'text-text-muted', 'hover:bg-gray-800');
+                button.classList.add('bg-accent-blue', 'text-white');
+                
+                const filter = button.getAttribute('data-filter');
+                
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Typed.js effect
+        const typedTextSpan = document.querySelector('.typed');
+        const professions = ['Software Engineer', 'Flutter Developer', 'Mobile App Developer', 'Fullstack Developer'];
+        let professionIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        function type() {
+            if (!typedTextSpan) return;
+            const currentProfession = professions[professionIndex];
+            
+            if (isDeleting) {
+                typedTextSpan.textContent = currentProfession.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextSpan.textContent = currentProfession.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            if (!isDeleting && charIndex === currentProfession.length) {
+                isDeleting = true;
+                setTimeout(type, 1000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                professionIndex = (professionIndex + 1) % professions.length;
+                setTimeout(type, 500);
+            } else {
+                const typingSpeed = isDeleting ? 100 : 200;
+                setTimeout(type, typingSpeed);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typedTextSpan) {
+                setTimeout(type, 1000);
+            }
+        });
+
+        // Formspree submission logic
+        const form = document.getElementById('contact-form');
+        const formMessages = document.getElementById('form-messages');
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Prevent default form submission
+
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formMessages.classList.remove('hidden', 'error');
+                    formMessages.classList.add('success');
+                    formMessages.textContent = 'Thank you for your message! I will get back to you shortly.';
+                    form.reset(); // Clear the form fields
+                } else {
+                    const data = await response.json();
+                    formMessages.classList.remove('hidden', 'success');
+                    formMessages.classList.add('error');
+                    if (data.errors) {
+                        formMessages.textContent = data.errors.map(error => error.message).join(', ');
+                    } else {
+                        formMessages.textContent = 'Oops! There was a problem submitting your form.';
+                    }
+                }
+                formMessages.classList.remove('hidden'); // Show messages
+            });
+        }
+    </script>
+</body>
+</html>
